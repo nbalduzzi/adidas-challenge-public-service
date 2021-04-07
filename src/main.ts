@@ -3,16 +3,19 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
-  const config = new DocumentBuilder()
-    .setTitle('Adidas Challenge - Public Service')
-    .setDescription('Public Service Endpoints')
-    .setVersion('1.0')
-    .build();
+  console.info(app.get('env'));
+  if (app.get('env') === 'development') {
+    const config = new DocumentBuilder()
+      .setTitle('Adidas Challenge - Public Service')
+      .setDescription('Public Service Endpoints')
+      .setVersion('1.0')
+      .build();
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+    const document = SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api', app, document);
+  }
 
   await app.listen(3000);
 }

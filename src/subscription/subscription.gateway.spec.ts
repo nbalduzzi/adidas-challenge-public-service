@@ -1,3 +1,5 @@
+import { ConfigModule } from '@nestjs/config';
+import { Test } from '@nestjs/testing';
 import * as fetchMock from 'fetch-mock';
 import { SubscriptionGateway } from './subscription.gateway';
 import { CreateSubscriptionDTO, SubscriptionDTO } from './subscription.model';
@@ -5,20 +7,30 @@ import { CreateSubscriptionDTO, SubscriptionDTO } from './subscription.model';
 describe('SubscriptionGateway', () => {
   let subscriptionGateway: SubscriptionGateway;
 
-  beforeEach(() => (subscriptionGateway = new SubscriptionGateway()));
+  beforeEach(async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [ConfigModule.forRoot({ envFilePath: '.env.development' })],
+      providers: [SubscriptionGateway],
+    }).compile();
+
+    subscriptionGateway = moduleRef.get<SubscriptionGateway>(
+      SubscriptionGateway,
+    );
+  });
+
   afterEach(() => fetchMock.restore());
 
   describe('get all subscription', () => {
     describe('on success fetch', () => {
       it('should return []', async () => {
-        fetchMock.get('http://localhost:3001/subscriptions', []);
+        fetchMock.get(process.env.SUBSCRIPTION_API_URL, []);
         expect(await subscriptionGateway.getAllSubscriptions()).toEqual([]);
       });
     });
 
     describe('on fail fetch', () => {
       it('should throw error', async () => {
-        fetchMock.get('http://localhost:3001/subscriptions', 500);
+        fetchMock.get(process.env.SUBSCRIPTION_API_URL, 500);
 
         await subscriptionGateway
           .getAllSubscriptions()
@@ -40,20 +52,20 @@ describe('SubscriptionGateway', () => {
           newsletterId: 'someNewsletterId',
         };
 
-        fetchMock.get('http://localhost:3001/subscriptions/someId', {
+        fetchMock.get(`${process.env.SUBSCRIPTION_API_URL}/someId`, {
           status: 200,
           body: subscription,
         });
 
         expect(await subscriptionGateway.getSubscription('someId')).toEqual(
-          subscription
+          subscription,
         );
       });
     });
 
     describe('on fail fetch', () => {
       it('should throw error', async () => {
-        fetchMock.get('http://localhost:3001/subscriptions/someId', 500);
+        fetchMock.get(`${process.env.SUBSCRIPTION_API_URL}/someId`, 500);
 
         await subscriptionGateway
           .getSubscription('someId')
@@ -79,10 +91,10 @@ describe('SubscriptionGateway', () => {
           id: 'someId',
         };
 
-        fetchMock.post('http://localhost:3001/subscriptions', subscription);
+        fetchMock.post(process.env.SUBSCRIPTION_API_URL, subscription);
 
         expect(
-          await subscriptionGateway.addSubscription(subscriptionRequest)
+          await subscriptionGateway.addSubscription(subscriptionRequest),
         ).toEqual(subscription);
       });
     });
@@ -98,7 +110,7 @@ describe('SubscriptionGateway', () => {
           newsletterId: 'someNewsletterId',
         };
 
-        fetchMock.post('http://localhost:3001/subscriptions', 500);
+        fetchMock.post(process.env.SUBSCRIPTION_API_URL, 500);
 
         await subscriptionGateway
           .addSubscription(subscriptionRequest)
@@ -121,28 +133,19 @@ describe('SubscriptionGateway', () => {
         };
 
         fetchMock.delete(
-          'http://localhost:3001/subscriptions/someId',
-          subscription
+          `${process.env.SUBSCRIPTION_API_URL}/someId`,
+          subscription,
         );
 
         expect(await subscriptionGateway.cancelSubscription('someId')).toEqual(
-          subscription
+          subscription,
         );
       });
     });
 
     describe('on fail fetch', () => {
       it('should throw error', async () => {
-        const subscriptionRequest: CreateSubscriptionDTO = {
-          consent: true,
-          dateOfBirth: Date.now(),
-          email: 'some@email.com',
-          firstName: 'Some Name',
-          gender: 'Male',
-          newsletterId: 'someNewsletterId',
-        };
-
-        fetchMock.delete('http://localhost:3001/subscriptions/someId', 500);
+        fetchMock.delete(`${process.env.SUBSCRIPTION_API_URL}/someId`, 500);
 
         await subscriptionGateway
           .cancelSubscription('someId')

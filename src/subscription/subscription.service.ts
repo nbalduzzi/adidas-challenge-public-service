@@ -8,7 +8,7 @@ export class SubscriptionService implements ISubscriptionService {
   constructor(private readonly subscriptionGateway: SubscriptionGateway) {}
 
   async addSubscription(
-    subscription: CreateSubscriptionDTO
+    subscription: CreateSubscriptionDTO,
   ): Promise<SubscriptionDTO> {
     return await this.subscriptionGateway.addSubscription(subscription);
   }

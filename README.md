@@ -56,6 +56,10 @@ $ docker build . -t adidas-challenge-public-service
 $ docker run -p3000:3000 adidas-challenge-public-service
 ```
 
+## Documentation
+
+Swagger documentation on dev instance: `http:localhost:3000/api`
+
 ## License
 
 [MIT licensed](LICENSE).

@@ -2,7 +2,7 @@ import { CreateSubscriptionDTO, SubscriptionDTO } from './subscription.model';
 
 export interface ISubscriptionController {
   addSubscription(
-    subscription: CreateSubscriptionDTO
+    subscription: CreateSubscriptionDTO,
   ): Promise<SubscriptionDTO>;
   getAllSubscriptions(): Promise<SubscriptionDTO[]>;
   cancelSubscription(id: string): Promise<SubscriptionDTO>;
@@ -11,7 +11,7 @@ export interface ISubscriptionController {
 
 export interface ISubscriptionService {
   addSubscription(
-    subscription: CreateSubscriptionDTO
+    subscription: CreateSubscriptionDTO,
   ): Promise<SubscriptionDTO>;
   getAllSubscriptions(): Promise<SubscriptionDTO[]>;
   cancelSubscription(id: string): Promise<SubscriptionDTO>;
@@ -20,7 +20,7 @@ export interface ISubscriptionService {
 
 export interface ISubscriptionGateway {
   addSubscription(
-    subscription: CreateSubscriptionDTO
+    subscription: CreateSubscriptionDTO,
   ): Promise<SubscriptionDTO>;
   getAllSubscriptions(): Promise<SubscriptionDTO[]>;
   cancelSubscription(id: string): Promise<SubscriptionDTO>;

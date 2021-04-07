@@ -13,7 +13,7 @@ export class SubscriptionController implements ISubscriptionController {
   @ApiBody({ required: true, type: CreateSubscriptionDTO })
   @ApiResponse({ type: SubscriptionDTO })
   async addSubscription(
-    @Body() subscription: CreateSubscriptionDTO
+    @Body() subscription: CreateSubscriptionDTO,
   ): Promise<SubscriptionDTO> {
     return await this.subscriptionService.addSubscription(subscription);
   }

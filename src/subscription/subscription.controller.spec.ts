@@ -41,7 +41,7 @@ describe('SubscriptionController', () => {
         .mockImplementation(() => Promise.resolve(subscription));
 
       expect(await subscriptionController.getSubscription('someId')).toEqual(
-        subscription
+        subscription,
       );
     });
   });
@@ -67,7 +67,7 @@ describe('SubscriptionController', () => {
         .mockImplementation(() => Promise.resolve(subscription));
 
       expect(
-        await subscriptionController.addSubscription(subscriptionRequest)
+        await subscriptionController.addSubscription(subscriptionRequest),
       ).toEqual(subscription);
     });
   });
@@ -89,7 +89,7 @@ describe('SubscriptionController', () => {
         .mockImplementation(() => Promise.resolve(subscription));
 
       expect(await subscriptionController.cancelSubscription('someId')).toEqual(
-        subscription
+        subscription,
       );
     });
   });

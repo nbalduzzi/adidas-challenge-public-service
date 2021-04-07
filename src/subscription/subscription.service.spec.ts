@@ -38,7 +38,7 @@ describe('SubscriptionService', () => {
         .mockImplementation(() => Promise.resolve(subscription));
 
       expect(await subscriptionService.getSubscription('someId')).toEqual(
-        subscription
+        subscription,
       );
     });
   });
@@ -64,7 +64,7 @@ describe('SubscriptionService', () => {
         .mockImplementation(() => Promise.resolve(subscription));
 
       expect(
-        await subscriptionService.addSubscription(subscriptionRequest)
+        await subscriptionService.addSubscription(subscriptionRequest),
       ).toEqual(subscription);
     });
   });
@@ -86,7 +86,7 @@ describe('SubscriptionService', () => {
         .mockImplementation(() => Promise.resolve(subscription));
 
       expect(await subscriptionService.cancelSubscription('someId')).toEqual(
-        subscription
+        subscription,
       );
     });
   });
