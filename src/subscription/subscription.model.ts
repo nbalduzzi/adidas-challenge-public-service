@@ -37,7 +37,7 @@ export class SubscriptionDTO {
     description: 'The subscriptor date of birth',
     type: String,
     required: true,
-    example: '1986-12-28T00:00:000Z',
+    example: '1986-12-28T00:00:00.000Z',
   })
   dateOfBirth: string;
 
