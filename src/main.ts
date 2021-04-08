@@ -1,12 +1,13 @@
+import * as helmet from 'helmet';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
+  app.use(helmet());
 
-  console.info(app.get('env'));
-  if (app.get('env') === 'development') {
+  if (process.env.NODE_ENV !== 'production') {
     const config = new DocumentBuilder()
       .setTitle('Adidas Challenge - Public Service')
       .setDescription('Public Service Endpoints')
@@ -19,4 +20,5 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
+
 bootstrap();

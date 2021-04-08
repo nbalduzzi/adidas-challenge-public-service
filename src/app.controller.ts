@@ -6,8 +6,8 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @ApiTags('health-check')
   @Get('/ping')
+  @ApiTags('health-check')
   getPing(): string {
     return this.appService.getPing();
   }

@@ -1,16 +1,13 @@
 import { SubscriptionController } from './subscription.controller';
 import { SubscriptionService } from './subscription.service';
-import { SubscriptionGateway } from './subscription.gateway';
 import { CreateSubscriptionDTO, SubscriptionDTO } from './subscription.model';
 
 describe('SubscriptionController', () => {
   let subscriptionController: SubscriptionController;
   let subscriptionService: SubscriptionService;
-  let subscriptionGateway: SubscriptionGateway;
 
   beforeEach(() => {
-    subscriptionGateway = new SubscriptionGateway();
-    subscriptionService = new SubscriptionService(subscriptionGateway);
+    subscriptionService = new SubscriptionService(null);
     subscriptionController = new SubscriptionController(subscriptionService);
   });
 
@@ -28,7 +25,7 @@ describe('SubscriptionController', () => {
     it('should return the subscription object', async () => {
       const subscription: SubscriptionDTO = {
         consent: true,
-        dateOfBirth: Date.now(),
+        dateOfBirth: new Date().toISOString(),
         email: 'some@email.com',
         firstName: 'Some Name',
         gender: 'Male',
@@ -50,7 +47,7 @@ describe('SubscriptionController', () => {
     it('should return the subscription created', async () => {
       const subscriptionRequest: CreateSubscriptionDTO = {
         consent: true,
-        dateOfBirth: Date.now(),
+        dateOfBirth: new Date().toISOString(),
         email: 'some@email.com',
         firstName: 'Some Name',
         gender: 'Male',
@@ -77,7 +74,7 @@ describe('SubscriptionController', () => {
       const subscription: SubscriptionDTO = {
         id: 'someId',
         consent: true,
-        dateOfBirth: Date.now(),
+        dateOfBirth: new Date().toISOString(),
         email: 'some@email.com',
         firstName: 'Some Name',
         gender: 'Male',

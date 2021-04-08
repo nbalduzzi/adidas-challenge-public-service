@@ -1,11 +1,10 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { SubscriptionController } from './subscription.controller';
-import { SubscriptionGateway } from './subscription.gateway';
 import { SubscriptionService } from './subscription.service';
 
 @Module({
-  imports: [],
+  imports: [HttpModule],
   controllers: [SubscriptionController],
-  providers: [SubscriptionService, SubscriptionGateway],
+  providers: [SubscriptionService],
 })
 export class SubscriptionModule {}

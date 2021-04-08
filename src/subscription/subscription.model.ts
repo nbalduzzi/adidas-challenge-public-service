@@ -31,10 +31,10 @@ export class SubscriptionDTO {
 
   @ApiProperty({
     description: 'The subscriptor date of birth',
-    type: Number,
+    type: String,
     required: true,
   })
-  dateOfBirth: number;
+  dateOfBirth: string;
 
   @ApiProperty({
     description: 'The subscriptor consent flag',
