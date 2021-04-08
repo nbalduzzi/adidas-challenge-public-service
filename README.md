@@ -20,30 +20,6 @@ Adidas Challenge Public Service API
 
 2. This API for each endpoint request will call a middleware that will autogenerate a signed token with the `secret` stored in `.env` file. Is not the best solution, but this was only for challenge purpose.
 
-## Security
-
-### Authorization Header
-
-The security of this api is `Bearer Auth JWT Authorization`
-
-To use de API directly, the `JWT` need to be generated with the below payload for success authorization:
-
-```json
-{
-  {
-    "origin": "adidas-challenge-public-service",
-    "resource": "subscriptions",
-    "timestamp": 1617895752000
-  }
-}
-```
-
-> The api is not validating the origin and resource by role, you can put any origin or resource, it is the same for the api. **All the fields are mandatory**.
-
-The `timestamp` to use must be in milliseconds and can be *at least* 2 min before the current timestamp in milliseconds. This aproach was to avoid retries or force brute attacks.
-
-The algorithm used was `HS256` and the secret for hashing the jwt is in `.env` file
-
 ### Helmet and Cors
 
 1. `Cors` was enabled for challenge purpose. Is not fully configurated for special origins.
