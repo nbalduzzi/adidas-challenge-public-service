@@ -5,7 +5,7 @@ COPY . /public-service
 
 WORKDIR /public-service
 
-RUN npm install
+RUN npm install --only=prod
 RUN npm run build
 
 CMD [ "npm", "run", "start:prod" ]

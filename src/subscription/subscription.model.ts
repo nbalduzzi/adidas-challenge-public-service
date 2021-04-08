@@ -5,6 +5,7 @@ export class SubscriptionDTO {
     description: 'The subscription ID',
     type: String,
     required: false,
+    example: '307136a8-6607-45d8-8d5a-144be75eabe0',
   })
   id?: string;
 
@@ -12,6 +13,7 @@ export class SubscriptionDTO {
     description: 'The subscriptor email',
     type: String,
     required: true,
+    example: 'jhon.doe@gmail.com',
   })
   email: string;
 
@@ -19,6 +21,7 @@ export class SubscriptionDTO {
     description: 'The subscriptor first name',
     type: String,
     required: false,
+    example: 'jhon',
   })
   firstName?: string;
 
@@ -26,6 +29,7 @@ export class SubscriptionDTO {
     description: 'The subscriptor gender',
     type: String,
     required: false,
+    example: 'Male',
   })
   gender?: string;
 
@@ -33,6 +37,7 @@ export class SubscriptionDTO {
     description: 'The subscriptor date of birth',
     type: String,
     required: true,
+    example: '1986-12-28T00:00:000Z',
   })
   dateOfBirth: string;
 
@@ -48,6 +53,7 @@ export class SubscriptionDTO {
     description: 'The subscriptor newsletter campaign id',
     type: String,
     required: true,
+    example: 'shoes_campaign_id',
   })
   newsletterId: string;
 }
