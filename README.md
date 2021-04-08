@@ -102,6 +102,16 @@ $ docker build . -t adidas-challenge-public-service
 $ docker run -p3000:3000 adidas-challenge-public-service
 ```
 
+### Docker Compose
+
+```bash
+# Up containers
+$ docker-compose up
+
+# Clean and up containers
+$ docker-compose up --build --force-recreate
+```
+
 ## Documentation
 
 Swagger documentation only on dev instance: `http:localhost:3000/api`
