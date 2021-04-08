@@ -5,7 +5,7 @@ import { ISubscriptionController } from './subscription.interface';
 import { CreateSubscriptionDTO, SubscriptionDTO } from './subscription.model';
 
 @Controller('subscriptions')
-@ApiTags('subscription')
+@ApiTags('subscriptions')
 export class SubscriptionController implements ISubscriptionController {
   constructor(private readonly subscriptionService: SubscriptionService) {}
 
@@ -21,7 +21,7 @@ export class SubscriptionController implements ISubscriptionController {
   @Get()
   @ApiResponse({ type: [SubscriptionDTO], status: 200 })
   async getAllSubscriptions(): Promise<SubscriptionDTO[]> {
-    return this.subscriptionService.getAllSubscriptions();
+    return await this.subscriptionService.getAllSubscriptions();
   }
 
   @Delete('/:id')
@@ -33,7 +33,7 @@ export class SubscriptionController implements ISubscriptionController {
     name: 'id',
   })
   async cancelSubscription(@Param('id') id: string): Promise<SubscriptionDTO> {
-    return this.subscriptionService.cancelSubscription(id);
+    return await this.subscriptionService.cancelSubscription(id);
   }
 
   @Get('/:id')
@@ -45,6 +45,6 @@ export class SubscriptionController implements ISubscriptionController {
     name: 'id',
   })
   async getSubscription(@Param('id') id: string): Promise<SubscriptionDTO> {
-    return this.subscriptionService.getSubscription(id);
+    return await this.subscriptionService.getSubscription(id);
   }
 }
