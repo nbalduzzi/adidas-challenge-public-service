@@ -1,5 +1,5 @@
 import { of, throwError } from 'rxjs';
-import { HttpService } from '@nestjs/common';
+import { HttpException, HttpService } from '@nestjs/common';
 import { SubscriptionService } from './subscription.service';
 import { CreateSubscriptionDTO, SubscriptionDTO } from './subscription.model';
 
@@ -32,15 +32,22 @@ describe('SubscriptionService', () => {
     describe('on http service fails', () => {
       it('should throw error', async () => {
         jest.spyOn(httpService, 'get').mockReturnValue(
-          throwError({
-            status: 500,
-            message: 'Internal Server Error',
-          }),
+          throwError(
+            new HttpException(
+              {
+                status: 500,
+                data: { message: 'Internal Server Error' },
+              },
+              500,
+            ),
+          ),
         );
 
-        subscriptionService
-          .getAllSubscriptions()
-          .catch((e) => expect(e.message).toMatch('Internal Server Error'));
+        try {
+          await subscriptionService.getAllSubscriptions();
+        } catch (e) {
+          expect(e.message).toEqual('Internal Server Error');
+        }
       });
     });
   });
@@ -77,15 +84,22 @@ describe('SubscriptionService', () => {
     describe('on http service fails', () => {
       it('should throw error', async () => {
         jest.spyOn(httpService, 'get').mockReturnValue(
-          throwError({
-            status: 500,
-            message: 'Internal Server Error',
-          }),
+          throwError(
+            new HttpException(
+              {
+                status: 500,
+                data: { message: 'Internal Server Error' },
+              },
+              500,
+            ),
+          ),
         );
 
-        subscriptionService
-          .getSubscription('someId')
-          .catch((e) => expect(e.message).toMatch('Internal Server Error'));
+        try {
+          await subscriptionService.getSubscription('someId');
+        } catch (e) {
+          expect(e.message).toEqual('Internal Server Error');
+        }
       });
     });
   });
@@ -126,22 +140,29 @@ describe('SubscriptionService', () => {
     describe('on http service fails', () => {
       it('should throw error', async () => {
         jest.spyOn(httpService, 'post').mockReturnValue(
-          throwError({
-            status: 500,
-            message: 'Internal Server Error',
-          }),
+          throwError(
+            new HttpException(
+              {
+                status: 500,
+                data: { message: 'Internal Server Error' },
+              },
+              500,
+            ),
+          ),
         );
 
-        subscriptionService
-          .addSubscription({
+        try {
+          await subscriptionService.addSubscription({
             consent: true,
             dateOfBirth: new Date().toISOString(),
             email: 'some@email.com',
             firstName: 'Some Name',
             gender: 'Male',
             newsletterId: 'someNewsletterId',
-          })
-          .catch((e) => expect(e.message).toMatch('Internal Server Error'));
+          });
+        } catch (e) {
+          expect(e.message).toEqual('Internal Server Error');
+        }
       });
     });
   });
@@ -178,15 +199,22 @@ describe('SubscriptionService', () => {
     describe('on http service fails', () => {
       it('should throw error', async () => {
         jest.spyOn(httpService, 'delete').mockReturnValue(
-          throwError({
-            status: 500,
-            message: 'Internal Server Error',
-          }),
+          throwError(
+            new HttpException(
+              {
+                status: 500,
+                data: { message: 'Internal Server Error' },
+              },
+              500,
+            ),
+          ),
         );
 
-        subscriptionService
-          .cancelSubscription('someId')
-          .catch((e) => expect(e.message).toMatch('Internal Server Error'));
+        try {
+          await subscriptionService.cancelSubscription('someId');
+        } catch (e) {
+          expect(e.message).toEqual('Internal Server Error');
+        }
       });
     });
   });
