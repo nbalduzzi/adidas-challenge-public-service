@@ -20,6 +20,8 @@ Adidas Challenge Public Service API
 
 2. This API for each endpoint request will call a middleware that will autogenerate a signed token with the `secret` stored in `.env` file. Is not the best solution, but this was only for challenge purpose.
 
+3. On `consent` is `true` the subscription service will send the email notification. In other way the `emailNotificationStatus` always be `PENDING`
+
 ### Helmet and Cors
 
 1. `Cors` was enabled for challenge purpose. Is not fully configurated for special origins.

@@ -12,4 +12,3 @@ services:
 networks:
     adidas_challenge:
         name: adidas_challenge
-        driver: bridge
