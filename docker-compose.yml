@@ -2,5 +2,14 @@ services:
     api:
         build: .
         container_name: adidas-challenge-public-service
+        environment:
+            SUBSCRIPTION_SERVICE_URL: http://adidas-challenge-subscription-service:3001/subscriptions
         ports:
             - "3000:3000"
+        networks:
+            - adidas_challenge
+
+networks:
+    adidas_challenge:
+        name: adidas_challenge
+        driver: bridge
