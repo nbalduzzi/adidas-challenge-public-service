@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adidas-challenge-public-service
+  namespace: dev
+  labels:
+    app: adidas-challenge-public-service
+spec:
+  selector:
+    matchLabels:
+      app: adidas-challenge-public-service
+  revisionHistoryLimit: 2
+  replicas: 4
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: adidas-challenge-public-service
+    spec:
+      containers:
+      - image: adidas-challenge-public-service:1.0.0
+        imagePullPolicy: Always
+        name: adidas-challenge-public-api
+        livenessProbe:
+          exec:
+            command:
+            - node
+            - --version
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 3000
+          periodSeconds: 3
+        resources:
+          requests:
+            cpu: 400m
+            memory: 1024Mi
+          limits:
+            cpu: 600m
+            memory: 1280Mi
+        ports:
+          - name: http
+            containerPort: 3000
+        env:
+          - name: SECRET
+            valueFrom:
+              secretKeyRef:
+                name: secrets
+                key: jwt-secret
+          - name: SUBSCRIPTION_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: adidas-challenge-public-service
+                key: subscription-service-url
